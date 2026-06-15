@@ -2,8 +2,6 @@
 
 **Uikki✦Uikki**는 별도의 npm 의존성 패키지 설치 없이 코드를 복사하거나 터미널 명령어로 직접 쏙 빼서 쓸 수 있는, 가볍고 빠르며 무의존성(Zero-dependency)을 지향하는 React 기반 UI 컴포넌트 라이브러리/플레이그라운드입니다.
 
-![Uikki Gallery Preview](https://github.com/dmswl6310/Uikki-uikki/assets/preview.png)
-
 ## 🚀 왜 Uikki인가요?
 
 1. **무의존성 (Zero-dependency):** 복잡한 외부 라이브러리(Framer Motion 등) 없이 오직 React 상태(State)와 순수 CSS(Tailwind)만을 이용해 애니메이션과 로직을 모두 구현했습니다. 코드가 아주 가볍고 충돌할 일이 없습니다.

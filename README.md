@@ -1,5 +1,5 @@
 # Uikki✦Uikki (위키위키) - React UI Component Gallery
-[위키위키 사이트 바로가기](https://comp-plus-three.vercel.app)
+[위키위키 사이트 바로가기](https://uikki.vercel.app/)
 
 **Uikki✦Uikki**는 별도의 npm 의존성 패키지 설치 없이 코드를 복사하거나 터미널 명령어로 직접 쏙 빼서 쓸 수 있는, 가볍고 빠르며 무의존성(Zero-dependency)을 지향하는 React 기반 UI 컴포넌트 라이브러리/플레이그라운드입니다.
 

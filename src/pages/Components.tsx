@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { Search, X } from "lucide-react";
 import PageTitle from "@/components/common/PageTitle";
 import ComponentList from "@/components/ComponentList";
-import { componentsData } from "@/data/componentsData";
+import { componentsCatalog } from "@/data/componentsCatalog";
 import { ComponentCategory } from "@/types/component.types";
 import { useSEO } from "@/hooks/useSEO";
 
@@ -28,7 +28,7 @@ const Components = () => {
 
   // 모든 컴포넌트에서 고유한 태그 추출
   const availableTags = useMemo(() => {
-    const tags = componentsData.flatMap((c) => c.tags || []);
+    const tags = componentsCatalog.flatMap((c) => c.tags || []);
     return Array.from(new Set(tags));
   }, []);
 
@@ -36,7 +36,7 @@ const Components = () => {
     () =>
       categories.reduce(
         (acc, category) => {
-          acc[category] = componentsData.filter(
+          acc[category] = componentsCatalog.filter(
             (component) => (component.category ?? "ui") === category,
           ).length;
           return acc;
@@ -47,7 +47,7 @@ const Components = () => {
   );
 
   const filteredComponents = useMemo(() => {
-    return componentsData.filter((comp) => {
+    return componentsCatalog.filter((comp) => {
       const query = searchQuery.toLowerCase().trim();
       const matchSearch =
         query === "" ||

@@ -1,19 +1,26 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
-import { componentsData } from "@/data/componentsData";
+import { loadComponent } from "@/data/componentLoaders";
+import type { RegisteredComponentInfo } from "@/types/component.types";
 import Examples from "./Examples";
 import CodeTabs from "./common/CodeTabs";
 import PropsTable from "./PropsTable";
 import { useSEO } from "@/hooks/useSEO";
 
 import { renderToStaticMarkup } from "react-dom/server";
-import { createElement } from "react";
+import { createElement, useEffect, useState } from "react";
 
 const categoryLabel = {
   ui: "UI",
   blocks: "Blocks",
   templates: "Templates",
 } as const;
+
+type ComponentLoadState = {
+  id?: string;
+  status: "loading" | "ready" | "not-found" | "error";
+  detail?: RegisteredComponentInfo;
+};
 
 // 간단한 HTML 포매터 (태그 사이에 줄바꿈과 들여쓰기 추가)
 const formatHTML = (html: string) => {
@@ -49,7 +56,39 @@ const formatHTML = (html: string) => {
 const ComponentDetail = () => {
   const { id } = useParams<{ id: string }>();
   const normalizedId = id === "button1" ? "button" : id;
-  const detail = componentsData.find((c) => c.id === normalizedId);
+  const [loadState, setLoadState] = useState<ComponentLoadState>({
+    status: "loading",
+  });
+  const detail = loadState.detail;
+
+  useEffect(() => {
+    let active = true;
+    setLoadState({ id: normalizedId, status: "loading" });
+
+    if (!normalizedId) {
+      setLoadState({ id: normalizedId, status: "not-found" });
+      return () => {
+        active = false;
+      };
+    }
+
+    void loadComponent(normalizedId)
+      .then((component) => {
+        if (!active) return;
+        setLoadState({
+          id: normalizedId,
+          status: component ? "ready" : "not-found",
+          detail: component,
+        });
+      })
+      .catch(() => {
+        if (active) setLoadState({ id: normalizedId, status: "error" });
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [normalizedId]);
 
   // SEO 메타 태그 동적 변경 (detail이 있을 때만 적용, 없으면 useSEO 훅 내부 로직과 타이밍 이슈 없도록)
   useSEO({
@@ -57,7 +96,43 @@ const ComponentDetail = () => {
     description: detail ? detail.description : "컴포넌트를 찾을 수 없습니다.",
   });
 
-  if (!detail) return <Navigate to="/not-found" replace />;
+  const isLoading =
+    loadState.id !== normalizedId || loadState.status === "loading";
+
+  if (isLoading) {
+    return (
+      <div
+        role="status"
+        className="py-24 text-center text-sm text-gray-500 dark:text-gray-400"
+      >
+        컴포넌트를 불러오는 중입니다…
+      </div>
+    );
+  }
+
+  if (loadState.status === "error") {
+    return (
+      <div className="mx-auto max-w-lg py-24 text-center">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-slate-100">
+          컴포넌트를 불러오지 못했습니다
+        </h1>
+        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+          잠시 후 페이지를 새로고침해 주세요.
+        </p>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="mt-5 rounded-xl bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+        >
+          다시 시도
+        </button>
+      </div>
+    );
+  }
+
+  if (loadState.status === "not-found" || !detail) {
+    return <Navigate to="/not-found" replace />;
+  }
 
   const htmlCode =
     detail.Component && detail.examples.length > 0

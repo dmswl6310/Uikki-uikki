@@ -2,11 +2,13 @@ import thumbnail from "@assets/tooltip-thumbnail.svg";
 import { PropControl } from "@/types/component.types";
 
 export const tooltipMeta = {
+  category: "ui" as const,
   name: "Tooltip",
   description:
     "마우스를 올렸을 때 추가적인 정보를 제공하는 말풍선 컴포넌트입니다.",
   tags: ["UI", "Overlay", "Information"],
   aliases: ["툴팁", "말풍선", "힌트"],
+  updatedAt: new Date("2026-05-14"),
   image: thumbnail,
   propControls: {
     content: {

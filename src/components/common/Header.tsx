@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, Moon, Package, Search, Sun, X } from "lucide-react";
-import SearchModal from "./SearchModal";
 import { useTheme } from "./ThemeProvider";
+
+const SearchModal = lazy(() => import("./SearchModal"));
 
 const navigation = [
   { to: "/components", label: "컴포넌트 목록" },
@@ -143,10 +144,11 @@ const Header = () => {
         )}
       </header>
 
-      <SearchModal
-        isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
-      />
+      {isSearchOpen && (
+        <Suspense fallback={null}>
+          <SearchModal isOpen onClose={() => setIsSearchOpen(false)} />
+        </Suspense>
+      )}
     </>
   );
 };

@@ -9,7 +9,6 @@ const accordionComponent: ComponentInfo<CustomAccordionProps> = {
   id: "accordion",
   Component: CustomAccordion,
   ...accordionMeta,
-  updatedAt: new Date("2026-05-14"),
   code,
   codeJs,
   examples: accordionExamples,

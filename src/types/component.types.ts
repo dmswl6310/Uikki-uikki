@@ -49,3 +49,16 @@ export type RegisteredComponentInfo = Omit<
   propControls?: Partial<Record<string, PropControl>>;
   Component?: ElementType;
 };
+
+export type ComponentCatalogItem = Pick<
+  RegisteredComponentInfo,
+  | "id"
+  | "name"
+  | "category"
+  | "tags"
+  | "aliases"
+  | "image"
+  | "updatedAt"
+  | "description"
+  | "usage"
+>;

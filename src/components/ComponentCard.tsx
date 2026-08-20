@@ -1,4 +1,4 @@
-import type { RegisteredComponentInfo } from "@/types/component.types";
+import type { ComponentCatalogItem } from "@/types/component.types";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -12,7 +12,7 @@ const ComponentCard = ({
   info,
   priority = false,
 }: {
-  info: RegisteredComponentInfo;
+  info: ComponentCatalogItem;
   priority?: boolean;
 }) => {
   const [imageFailed, setImageFailed] = useState(false);

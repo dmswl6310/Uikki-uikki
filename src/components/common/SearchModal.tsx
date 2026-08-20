@@ -1,7 +1,7 @@
 import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { ChevronRight, Package, Search, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { componentsData } from "@/data/componentsData";
+import { componentsCatalog } from "@/data/componentsCatalog";
 
 type SearchModalProps = {
   isOpen: boolean;
@@ -28,7 +28,7 @@ const SearchModal = ({ isOpen, onClose }: SearchModalProps) => {
     if (!query.trim()) return [];
     const lowerQuery = query.toLowerCase().trim();
 
-    return componentsData.filter(
+    return componentsCatalog.filter(
       (component) =>
         component.name.toLowerCase().includes(lowerQuery) ||
         component.id.toLowerCase().includes(lowerQuery) ||

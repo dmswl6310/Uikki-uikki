@@ -2,10 +2,12 @@ import thumbnail from "@assets/drawer-thumbnail.svg";
 import { PropControl } from "@/types/component.types";
 
 export const drawerMeta = {
+  category: "ui" as const,
   name: "Drawer",
   description: "화면 가장자리에서 미끄러져 들어오는 패널(Sheet)입니다.",
   tags: ["UI", "Overlay", "Modal", "Sheet"],
   aliases: ["드로워", "사이드바", "시트", "오프캔버스"],
+  updatedAt: new Date("2026-05-14"),
   image: thumbnail,
   propControls: {
     position: {

@@ -9,7 +9,6 @@ const tooltipComponent: ComponentInfo<CustomTooltipProps> = {
   id: "tooltip",
   Component: CustomTooltip,
   ...tooltipMeta,
-  updatedAt: new Date("2026-05-14"),
   code,
   codeJs,
   examples: tooltipExamples,

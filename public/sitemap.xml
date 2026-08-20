@@ -8,15 +8,22 @@
   <url><loc>https://uikki.vercel.app/components/badge</loc></url>
   <url><loc>https://uikki.vercel.app/components/button</loc></url>
   <url><loc>https://uikki.vercel.app/components/card</loc></url>
+  <url><loc>https://uikki.vercel.app/components/checkbox</loc></url>
   <url><loc>https://uikki.vercel.app/components/drawer</loc></url>
+  <url><loc>https://uikki.vercel.app/components/dropdown-menu</loc></url>
   <url><loc>https://uikki.vercel.app/components/input</loc></url>
   <url><loc>https://uikki.vercel.app/components/list</loc></url>
   <url><loc>https://uikki.vercel.app/components/modal</loc></url>
   <url><loc>https://uikki.vercel.app/components/progress</loc></url>
+  <url><loc>https://uikki.vercel.app/components/radio-group</loc></url>
+  <url><loc>https://uikki.vercel.app/components/select</loc></url>
+  <url><loc>https://uikki.vercel.app/components/skeleton</loc></url>
   <url><loc>https://uikki.vercel.app/components/tabs</loc></url>
   <url><loc>https://uikki.vercel.app/components/toast</loc></url>
   <url><loc>https://uikki.vercel.app/components/toggle</loc></url>
   <url><loc>https://uikki.vercel.app/components/tooltip</loc></url>
+  <url><loc>https://uikki.vercel.app/components/data-table</loc></url>
   <url><loc>https://uikki.vercel.app/components/newsletter-cta</loc></url>
+  <url><loc>https://uikki.vercel.app/components/admin-dashboard</loc></url>
   <url><loc>https://uikki.vercel.app/components/checkout-page</loc></url>
 </urlset>

@@ -39,11 +39,12 @@ const Guide = () => {
             </h2>
           </div>
           <p className="leading-relaxed text-gray-600 dark:text-gray-400">
-            shadcn/ui의 철학을 본받아, 무거운 npm 패키지를 설치할 필요 없이{" "}
+            Uikki에서 직접 설계한 React·TypeScript·Tailwind 컴포넌트를{" "}
             <strong>
               원하는 컴포넌트의 소스 코드만 내 프로젝트로 쏙 빼오는
             </strong>{" "}
-            CLI 도구를 제공합니다. 터미널에 아래 명령어만 치면 끝납니다!
+            CLI 도구를 제공합니다. 별도의 UI 라이브러리 런타임 없이 내려받은
+            코드를 바로 수정할 수 있습니다.
           </p>
 
           <div className="group relative mt-2 flex items-center justify-between rounded-xl bg-gray-900 p-5 shadow-lg">

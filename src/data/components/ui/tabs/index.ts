@@ -9,7 +9,6 @@ const tabsComponent: ComponentInfo<CustomTabsProps> = {
   id: "tabs",
   Component: CustomTabs,
   ...tabsMeta,
-  updatedAt: new Date("2026-05-14"),
   code,
   codeJs,
   examples: tabsExamples,

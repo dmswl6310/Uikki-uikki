@@ -4,7 +4,14 @@ export type CustomAvatarProps = {
   online: boolean;
 };
 
-const COLORS = ["bg-blue-500", "bg-purple-500", "bg-teal-500", "bg-orange-500", "bg-pink-500", "bg-indigo-500"];
+const COLORS = [
+  "bg-blue-500",
+  "bg-purple-500",
+  "bg-teal-500",
+  "bg-orange-500",
+  "bg-pink-500",
+  "bg-indigo-500",
+];
 
 const getInitials = (name: string) =>
   name
@@ -14,9 +21,14 @@ const getInitials = (name: string) =>
     .toUpperCase()
     .slice(0, 2);
 
-const getColor = (name: string) => COLORS[name.charCodeAt(0) % COLORS.length];
+const getColor = (name: string) =>
+  COLORS[(name.charCodeAt(0) || 0) % COLORS.length];
 
-export const CustomAvatar = ({ name, size = "md", online = false }: CustomAvatarProps) => {
+export const CustomAvatar = ({
+  name,
+  size = "md",
+  online = false,
+}: CustomAvatarProps) => {
   const isOnline = String(online) === "true" || online === true;
 
   const sizeMap = {
@@ -28,12 +40,21 @@ export const CustomAvatar = ({ name, size = "md", online = false }: CustomAvatar
   const s = sizeMap[size] || sizeMap.md;
 
   return (
-    <div className="relative inline-flex shrink-0">
-      <div className={`${s.box} ${getColor(name)} rounded-full flex items-center justify-center text-white font-bold ${s.text}`}>
+    <div
+      className="relative inline-flex shrink-0"
+      role="img"
+      aria-label={`${name} 아바타${isOnline ? ", 온라인" : ""}`}
+    >
+      <div
+        className={`${s.box} ${getColor(name)} flex items-center justify-center rounded-full font-bold text-white ${s.text}`}
+      >
         {getInitials(name) || "?"}
       </div>
       {isOnline && (
-        <span className={`absolute bottom-0 right-0 ${s.dot} bg-green-500 rounded-full border-white`} />
+        <span
+          className={`absolute right-0 bottom-0 ${s.dot} rounded-full border-white bg-green-500 dark:border-slate-900`}
+          aria-hidden="true"
+        />
       )}
     </div>
   );

@@ -19,14 +19,14 @@ function rawJsPlugin() {
         } catch {
           return `export default ""`;
         }
-        
+
         const result = transformSync(fileContent, {
           loader: "tsx",
           jsx: "preserve",
           target: "esnext",
           format: "esm",
         });
-        
+
         return `export default ${JSON.stringify(result.code)};`;
       }
       return null;
@@ -51,18 +51,25 @@ export default defineConfig({
     tailwindcss(),
     VitePWA({
       registerType: "autoUpdate",
-      // publicDir에 없는 asset (전부다 포함시킬것)
       workbox: {
         maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
-        // globPatterns: ["**/*.{js,css,html,ico,png,svg}"],
+        cleanupOutdatedCaches: true,
+        clientsClaim: true,
+        navigateFallback: "/index.html",
       },
-      //오프라인에서도 나오게 precache
-      includeAssets: ["react.svg", "vite.svg"],
+      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
       manifest: {
-        name: "my PWA App",
-        short_name: "vitePWA",
-        description: "First vitePWA",
-        theme_color: "#FFDCDC",
+        id: "/",
+        name: "Uikki✦Uikki React UI Playground",
+        short_name: "Uikki",
+        description:
+          "React 컴포넌트를 실시간으로 테스트하고 소스를 가져가는 UI Playground",
+        lang: "ko-KR",
+        start_url: "/",
+        scope: "/",
+        display: "standalone",
+        background_color: "#ffffff",
+        theme_color: "#2563eb",
         icons: [
           {
             src: "pwa-192x192.png",
@@ -78,15 +85,4 @@ export default defineConfig({
       },
     }),
   ],
-  build: {
-    chunkSizeWarningLimit: 1500,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["react", "react-dom", "react-router-dom"],
-          ui: ["lucide-react", "react-syntax-highlighter"],
-        },
-      },
-    },
-  },
 });

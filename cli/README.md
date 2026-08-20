@@ -1,61 +1,50 @@
-# Uikki✦Uikki CLI 🐒
+# Uikki CLI
 
-The official CLI tool for **[Uikki✦Uikki](https://uikki.vercel.app)**, a Zero-dependency React UI Component Gallery.
+[Uikki Playground](https://uikki.vercel.app/)에서 확인한 React 컴포넌트의 원본 소스를 현재 프로젝트에 추가하는 CLI입니다. 설치 없이 `npx`로 실행할 수 있습니다.
 
-## 🚀 What is Uikki?
+## 요구사항
 
-Uikki is a collection of beautiful, pre-built React components inspired by the philosophy of `shadcn/ui`. Instead of installing a heavy npm package and using components as a black box, Uikki CLI allows you to **fetch the raw component source code** directly into your project's `src/components/...` directory. 
+- Node.js 18 이상
+- React 프로젝트
+- Tailwind CSS v4
 
-You get total control over the code, allowing you to customize it exactly how you want it!
-
-## ⚡ Quick Start
-
-Run the following command in your React/Tailwind project to add a component:
+## 사용법
 
 ```bash
-npx -y uikki add <component-name>
-```
-
-**Example:**
-```bash
+npx -y uikki list
 npx -y uikki add button
-npx -y uikki add drawer
+npx -y uikki add ui/drawer
+npx -y uikki add blocks/data-table
+npx -y uikki add templates/admin-dashboard
 ```
 
-The CLI will automatically download the component from the Uikki GitHub repository and save it to your `src/components/ui/` folder.
+UI 항목은 `ui/`를 생략할 수 있습니다. 출력 경로는 다음과 같습니다.
 
-## 🎮 Live Demo & Component Playground
+```text
+src/components/ui/Button.tsx
+src/components/blocks/NewsletterCta.tsx
+src/components/templates/CheckoutPage.tsx
+```
 
-You don't need to install anything to see what Uikki can do! 
-Visit our live gallery to test components, tweak their props in real-time, and copy the code:
+Block이나 Template이 다른 Uikki UI를 사용하면 필요한 파일도 함께 설치합니다. 이미 존재하는 파일은 자동으로 덮어쓰지 않습니다.
 
-👉 **[Live Demo & Playground](https://uikki.vercel.app)** 👈
+```bash
+# 기존 파일을 의도적으로 교체할 때만 사용
+npx -y uikki add button --force
+```
 
-## 📦 Available Components
+## 지원 항목
 
-Currently, the following components are available to fetch via CLI. You can see how each of them looks and behaves on our live website.
+- UI: `accordion`, `avatar`, `badge`, `button`, `card`, `checkbox`, `drawer`, `dropdown-menu`, `input`, `list`, `modal`, `progress`, `radio-group`, `select`, `skeleton`, `tabs`, `toast`, `toggle`, `tooltip`
+- Blocks: `data-table`, `newsletter-cta`
+- Templates: `admin-dashboard`, `checkout-page`
 
-- `accordion`
-- `avatar`
-- `badge`
-- `button`
-- `card`
-- `drawer`
-- `input`
-- `list`
-- `modal`
-- `progress`
-- `tabs`
-- `toast`
-- `toggle`
-- `tooltip`
+## 동작과 안전장치
 
-## 🎨 Features
+- 허용 목록에 있는 컴포넌트만 설치합니다.
+- 입력값과 최종 출력 경로를 검증해 경로 이탈을 막습니다.
+- GitHub의 Uikki `main` 브랜치에서 원본을 내려받습니다.
+- 요청 제한 시간과 최대 리다이렉트 횟수를 적용합니다.
+- 갤러리 내부의 `Custom` 접두사와 import 경로를 소비자 프로젝트용으로 변환합니다.
 
-- **Zero-dependency:** Animations and logic are built using pure React state and Tailwind CSS. No Framer Motion, no heavy dependencies!
-- **Dark Mode Ready:** All components include Tailwind v4 `dark:` variants out of the box.
-- **Copy & Paste Philosophy:** The code belongs to you. Tweak styles, add logic, and make it yours.
-
-## 🔗 Links
-
-- **GitHub Repository:** [dmswl6310/Uikki-uikki](https://github.com/dmswl6310/Uikki-uikki)
+컴포넌트 미리보기와 Props 조작은 [Uikki Playground](https://uikki.vercel.app/components)에서 확인할 수 있습니다. 소스와 이슈는 [GitHub 저장소](https://github.com/dmswl6310/Uikki-uikki)에서 관리합니다.

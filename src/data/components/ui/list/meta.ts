@@ -1,4 +1,4 @@
-import listThumbnail from "@assets/list-thumbnail-new.png";
+import listThumbnail from "@assets/list-thumbnail-new.webp";
 import { PropControl } from "@/types/component.types";
 
 export const listMeta = {
@@ -13,6 +13,6 @@ export const listMeta = {
     first: { type: "string" as PropControl["type"] },
     second: { type: "string" as PropControl["type"] },
     third: { type: "string" as PropControl["type"] },
-    fourth: { type: "string" as PropControl["type"] }
-  }
+    fourth: { type: "string" as PropControl["type"] },
+  },
 };

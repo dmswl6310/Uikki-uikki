@@ -6,7 +6,7 @@ import { CustomButton, CustomButtonProps } from "./CustomButton";
 import { ComponentInfo } from "@/types/component.types";
 
 const buttonComponent: ComponentInfo<CustomButtonProps> = {
-  id: "button1",
+  id: "button",
   Component: CustomButton,
   ...buttonMeta,
   code: buttonCode,

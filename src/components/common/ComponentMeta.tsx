@@ -1,6 +1,6 @@
-import { ComponentInfo } from "@/types/component.types";
+import type { RegisteredComponentInfo } from "@/types/component.types";
 
-const ComponentMeta = ({ info }: { info: ComponentInfo }) => {
+const ComponentMeta = ({ info }: { info: RegisteredComponentInfo }) => {
   return (
     <div>
       <p className="text-sm text-gray-700">{info.description}</p>

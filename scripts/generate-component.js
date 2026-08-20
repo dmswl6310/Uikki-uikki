@@ -1,6 +1,6 @@
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,36 +9,78 @@ const __dirname = path.dirname(__filename);
 const arg = process.argv[2];
 
 if (!arg) {
-  console.error("❌ Error: 컴포넌트 경로를 입력해주세요. (예: npm run generate ui/my-button)");
+  console.error(
+    "❌ Error: 컴포넌트 경로를 입력해주세요. (예: npm run generate ui/my-button)",
+  );
   process.exit(1);
 }
 
-const parts = arg.split('/');
+const parts = arg.split("/");
 if (parts.length !== 2) {
-  console.error("❌ Error: 올바른 형식이 아닙니다. 카테고리/컴포넌트명 형식으로 입력해주세요. (예: ui/my-button)");
+  console.error(
+    "❌ Error: 올바른 형식이 아닙니다. 카테고리/컴포넌트명 형식으로 입력해주세요. (예: ui/my-button)",
+  );
   process.exit(1);
 }
 
 const [category, kebabName] = parts;
 
-if (!['ui', 'blocks', 'templates'].includes(category)) {
-  console.error("❌ Error: 카테고리는 ui, blocks, templates 중 하나여야 합니다.");
+if (!["ui", "blocks", "templates"].includes(category)) {
+  console.error(
+    "❌ Error: 카테고리는 ui, blocks, templates 중 하나여야 합니다.",
+  );
+  process.exit(1);
+}
+
+if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(kebabName)) {
+  console.error(
+    "❌ Error: 컴포넌트명은 영문 소문자, 숫자, 하이픈만 사용할 수 있습니다.",
+  );
   process.exit(1);
 }
 
 // Convert kebab-case to PascalCase and camelCase
-const toPascalCase = (str) => str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+const toPascalCase = (str) =>
+  str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join("");
 const toCamelCase = (str) => {
   const pascal = toPascalCase(str);
   return pascal.charAt(0).toLowerCase() + pascal.slice(1);
 };
-const toTitleCase = (str) => str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+const toTitleCase = (str) =>
+  str
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 
 const pascalName = toPascalCase(kebabName); // MyButton
 const camelName = toCamelCase(kebabName); // myButton
 const titleName = toTitleCase(kebabName); // My Button
 
-const targetDir = path.join(__dirname, '..', 'src', 'data', 'components', category, kebabName);
+const targetDir = path.join(
+  __dirname,
+  "..",
+  "src",
+  "data",
+  "components",
+  category,
+  kebabName,
+);
+const componentsRoot = path.resolve(
+  __dirname,
+  "..",
+  "src",
+  "data",
+  "components",
+);
+const resolvedTargetDir = path.resolve(targetDir);
+
+if (!resolvedTargetDir.startsWith(`${componentsRoot}${path.sep}`)) {
+  console.error("❌ Error: 허용되지 않은 생성 경로입니다.");
+  process.exit(1);
+}
 
 if (fs.existsSync(targetDir)) {
   console.error(`❌ Error: 이미 존재하는 컴포넌트입니다. (${targetDir})`);
@@ -71,7 +113,7 @@ export const ${camelName}Meta = {
   description: "${titleName} 컴포넌트의 설명을 입력하세요.",
   tags: ["${kebabName}"],
   aliases: [],
-  updatedAt: new Date(),
+  updatedAt: new Date("${new Date().toISOString().slice(0, 10)}"),
   propControls: {
     text: { type: "string" as PropControl["type"] },
   } as Partial<Record<keyof Custom${pascalName}Props, PropControl>>,
@@ -100,7 +142,6 @@ const ${camelName}Component: ComponentInfo<Custom${pascalName}Props> = {
   id: "${kebabName}",
   Component: Custom${pascalName},
   ...${camelName}Meta,
-  updatedAt: new Date(),
   code,
   codeJs,
   examples: ${camelName}Examples,
@@ -109,10 +150,17 @@ const ${camelName}Component: ComponentInfo<Custom${pascalName}Props> = {
 export default ${camelName}Component;
 `;
 
-fs.writeFileSync(path.join(targetDir, `Custom${pascalName}.tsx`), componentContent);
-fs.writeFileSync(path.join(targetDir, 'meta.ts'), metaContent);
-fs.writeFileSync(path.join(targetDir, 'examples.tsx'), examplesContent);
-fs.writeFileSync(path.join(targetDir, 'index.ts'), indexContent);
+fs.writeFileSync(
+  path.join(targetDir, `Custom${pascalName}.tsx`),
+  componentContent,
+);
+fs.writeFileSync(path.join(targetDir, "meta.ts"), metaContent);
+fs.writeFileSync(path.join(targetDir, "examples.tsx"), examplesContent);
+fs.writeFileSync(path.join(targetDir, "index.ts"), indexContent);
 
-console.log(`✅ 성공적으로 생성되었습니다: src/data/components/${category}/${kebabName}/`);
-console.log(`👉 이제 Custom${pascalName}.tsx 파일을 열어 멋진 컴포넌트를 만들어보세요!`);
+console.log(
+  `✅ 성공적으로 생성되었습니다: src/data/components/${category}/${kebabName}/`,
+);
+console.log(
+  `👉 이제 Custom${pascalName}.tsx 파일을 열어 멋진 컴포넌트를 만들어보세요!`,
+);

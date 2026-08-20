@@ -1,15 +1,12 @@
 import Example from "./Example";
-import { ComponentInfo } from "@/types/component.types";
+import type { RegisteredComponentInfo } from "@/types/component.types";
 
-type ExamplesProps<T = any> = {
-  componentInfo: ComponentInfo<T>;
-  examples: T[];
+type ExamplesProps = {
+  componentInfo: RegisteredComponentInfo;
+  examples: Array<Record<string, unknown>>;
 };
 
-const Examples = <T extends Record<string, any>>({
-  componentInfo,
-  examples,
-}: ExamplesProps<T>) => {
+const Examples = ({ componentInfo, examples }: ExamplesProps) => {
   return (
     <div>
       {examples.map((exampleData, index) => (

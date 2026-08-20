@@ -1,26 +1,40 @@
 import "@fontsource/inter";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App";
-import Components from "./pages/Components";
 import "./styles.css";
-import Home from "./pages/Home";
-import ComponentDetail from "./components/ComponentDetail";
-import Guide from "./pages/Guide";
 import ReactDOM from "react-dom/client";
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { ToastProvider } from "@/components/common/ToastProvider";
 import { ThemeProvider } from "@/components/common/ThemeProvider";
+const Home = lazy(() => import("./pages/Home"));
+const Components = lazy(() => import("./pages/Components"));
+const ComponentDetail = lazy(() => import("./components/ComponentDetail"));
+const Guide = lazy(() => import("./pages/Guide"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
+const withSuspense = (element: React.ReactNode) => (
+  <Suspense
+    fallback={
+      <div className="py-24 text-center text-sm text-gray-500 dark:text-gray-400">
+        페이지를 불러오는 중입니다…
+      </div>
+    }
+  >
+    {element}
+  </Suspense>
+);
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "", element: <Home /> },
-      { path: "components", element: <Components /> },
-      { path: "components/:id", element: <ComponentDetail /> },
-      { path: "guide", element: <Guide /> },
+      { index: true, element: withSuspense(<Home />) },
+      { path: "components", element: withSuspense(<Components />) },
+      { path: "components/:id", element: withSuspense(<ComponentDetail />) },
+      { path: "guide", element: withSuspense(<Guide />) },
+      { path: "not-found", element: withSuspense(<NotFound />) },
+      { path: "*", element: withSuspense(<NotFound />) },
     ],
   },
 ]);

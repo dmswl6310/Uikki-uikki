@@ -1,10 +1,20 @@
 import copy from "copy-to-clipboard";
 import { useState } from "react";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight, oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter";
+import javascript from "react-syntax-highlighter/dist/esm/languages/prism/javascript";
+import markup from "react-syntax-highlighter/dist/esm/languages/prism/markup";
+import typescript from "react-syntax-highlighter/dist/esm/languages/prism/typescript";
+import {
+  oneLight,
+  oneDark,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Copy, Check, Download } from "lucide-react";
 import { useToast } from "./ToastProvider";
 import { useTheme } from "./ThemeProvider";
+
+SyntaxHighlighter.registerLanguage("typescript", typescript);
+SyntaxHighlighter.registerLanguage("javascript", javascript);
+SyntaxHighlighter.registerLanguage("html", markup);
 
 type CodeBlockProps = {
   code: string;
@@ -24,7 +34,8 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
   };
 
   const handleDownload = () => {
-    const extension = language === "html" ? "html" : language === "javascript" ? "jsx" : "tsx";
+    const extension =
+      language === "html" ? "html" : language === "javascript" ? "jsx" : "tsx";
     const blob = new Blob([code], { type: "text/plain;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -37,24 +48,35 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
     toast("📦 소스 코드가 다운로드되었습니다.", "success");
   };
 
-  const isDarkMode = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+  const isDarkMode =
+    theme === "dark" ||
+    (theme === "system" &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
-    <div className="relative group text-sm w-full overflow-hidden">
-      <div className="absolute right-3 top-3 z-10 flex gap-2">
-        <button 
+    <div className="group relative w-full overflow-hidden text-sm">
+      <div className="absolute top-3 right-3 z-10 flex gap-2">
+        <button
           onClick={handleDownload}
-          className="flex h-8 w-8 items-center justify-center rounded-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-slate-700 text-gray-500 dark:text-gray-400 shadow-sm backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 opacity-0 group-hover:opacity-100"
+          type="button"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white/80 text-gray-500 opacity-0 shadow-sm backdrop-blur-sm transition-all group-focus-within:opacity-100 group-hover:opacity-100 hover:bg-white hover:text-gray-900 focus:opacity-100 focus:ring-2 focus:ring-blue-500/50 focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
+          aria-label="소스 코드 다운로드"
           title="소스 코드 다운로드"
         >
           <Download size={14} />
         </button>
-        <button 
+        <button
           onClick={handleCopy}
-          className="flex h-8 w-8 items-center justify-center rounded-md bg-white/80 dark:bg-slate-800/80 border border-gray-200 dark:border-slate-700 text-gray-500 dark:text-gray-400 shadow-sm backdrop-blur-sm transition-all hover:bg-white dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50 opacity-0 group-hover:opacity-100"
+          type="button"
+          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white/80 text-gray-500 opacity-0 shadow-sm backdrop-blur-sm transition-all group-focus-within:opacity-100 group-hover:opacity-100 hover:bg-white hover:text-gray-900 focus:opacity-100 focus:ring-2 focus:ring-blue-500/50 focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
+          aria-label={copied ? "복사 완료" : "소스 코드 복사"}
           title="코드 복사"
         >
-          {copied ? <Check size={14} className="text-green-600 dark:text-green-400" /> : <Copy size={14} />}
+          {copied ? (
+            <Check size={14} className="text-green-600 dark:text-green-400" />
+          ) : (
+            <Copy size={14} />
+          )}
         </button>
       </div>
       <SyntaxHighlighter

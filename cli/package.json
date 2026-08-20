@@ -1,12 +1,12 @@
 {
   "name": "uikki",
-  "version": "1.0.4",
-  "description": "CLI tool for Uikki UI Component Gallery",
+  "version": "1.1.0",
+  "description": "Copy Uikki React component source files into your project",
   "bin": {
     "uikki": "./index.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node --test index.test.cjs"
   },
   "keywords": [
     "ui",
@@ -14,6 +14,23 @@
     "react",
     "cli"
   ],
-  "author": "",
-  "license": "MIT"
+  "author": "Eunji Hwang",
+  "license": "MIT",
+  "homepage": "https://uikki.vercel.app/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dmswl6310/Uikki-uikki.git",
+    "directory": "cli"
+  },
+  "bugs": {
+    "url": "https://github.com/dmswl6310/Uikki-uikki/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE"
+  ]
 }

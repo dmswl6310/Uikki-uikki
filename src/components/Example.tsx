@@ -36,8 +36,9 @@ const Example = ({ componentInfo, exampleData }: ExampleProps) => {
           <span>단일 컴포넌트 속성 (Properties) 동적 테스트</span>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-          {Object.keys(propsState).map((key) => {
-            const control = controls[key] ?? { type: "string" as const };
+          {Object.keys(controls).map((key) => {
+            const control = controls[key];
+            if (!control) return null;
             const controlType = control.type;
             const val = propsState[key];
             const inputId = `${controlGroupId}-${key}`;

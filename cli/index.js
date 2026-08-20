@@ -14,19 +14,48 @@ const REGISTRY = {
   "ui/badge": { category: "ui", name: "badge", dependencies: [] },
   "ui/button": { category: "ui", name: "button", dependencies: [] },
   "ui/card": { category: "ui", name: "card", dependencies: [] },
+  "ui/checkbox": { category: "ui", name: "checkbox", dependencies: [] },
   "ui/drawer": { category: "ui", name: "drawer", dependencies: [] },
+  "ui/dropdown-menu": {
+    category: "ui",
+    name: "dropdown-menu",
+    dependencies: [],
+  },
   "ui/input": { category: "ui", name: "input", dependencies: [] },
   "ui/list": { category: "ui", name: "list", dependencies: [] },
   "ui/modal": { category: "ui", name: "modal", dependencies: [] },
   "ui/progress": { category: "ui", name: "progress", dependencies: [] },
+  "ui/radio-group": {
+    category: "ui",
+    name: "radio-group",
+    dependencies: [],
+  },
+  "ui/select": { category: "ui", name: "select", dependencies: [] },
+  "ui/skeleton": { category: "ui", name: "skeleton", dependencies: [] },
   "ui/tabs": { category: "ui", name: "tabs", dependencies: [] },
   "ui/toast": { category: "ui", name: "toast", dependencies: [] },
   "ui/toggle": { category: "ui", name: "toggle", dependencies: [] },
   "ui/tooltip": { category: "ui", name: "tooltip", dependencies: [] },
+  "blocks/data-table": {
+    category: "blocks",
+    name: "data-table",
+    dependencies: ["ui/dropdown-menu"],
+  },
   "blocks/newsletter-cta": {
     category: "blocks",
     name: "newsletter-cta",
     dependencies: ["ui/badge", "ui/button", "ui/input"],
+  },
+  "templates/admin-dashboard": {
+    category: "templates",
+    name: "admin-dashboard",
+    dependencies: [
+      "ui/badge",
+      "ui/dropdown-menu",
+      "ui/progress",
+      "ui/select",
+      "blocks/data-table",
+    ],
   },
   "templates/checkout-page": {
     category: "templates",
@@ -77,9 +106,9 @@ const getTargetPath = (cwd, entry) => {
 const cleanSource = (source) =>
   source
     .replace(
-      /@\/data\/components\/ui\/([a-z0-9-]+)\/Custom([A-Za-z0-9]+)/g,
-      (_, componentName, importedName) =>
-        `../ui/${importedName || toPascalCase(componentName)}`,
+      /@\/data\/components\/(ui|blocks|templates)\/([a-z0-9-]+)\/Custom([A-Za-z0-9]+)/g,
+      (_, category, componentName, importedName) =>
+        `../${category}/${importedName || toPascalCase(componentName)}`,
     )
     .replace(/\bCustom([A-Z][A-Za-z0-9]*)/g, "$1");
 
@@ -189,7 +218,8 @@ Uikki CLI ${packageJson.version}
 
 예시:
   npx -y uikki add button
-  npx -y uikki add blocks/newsletter-cta
+  npx -y uikki add blocks/data-table
+  npx -y uikki add templates/admin-dashboard
 `);
 };
 

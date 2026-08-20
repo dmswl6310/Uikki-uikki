@@ -14,8 +14,8 @@
 npx -y uikki list
 npx -y uikki add button
 npx -y uikki add ui/drawer
-npx -y uikki add blocks/newsletter-cta
-npx -y uikki add templates/checkout-page
+npx -y uikki add blocks/data-table
+npx -y uikki add templates/admin-dashboard
 ```
 
 UI 항목은 `ui/`를 생략할 수 있습니다. 출력 경로는 다음과 같습니다.
@@ -35,9 +35,9 @@ npx -y uikki add button --force
 
 ## 지원 항목
 
-- UI: `accordion`, `avatar`, `badge`, `button`, `card`, `drawer`, `input`, `list`, `modal`, `progress`, `tabs`, `toast`, `toggle`, `tooltip`
-- Blocks: `newsletter-cta`
-- Templates: `checkout-page`
+- UI: `accordion`, `avatar`, `badge`, `button`, `card`, `checkbox`, `drawer`, `dropdown-menu`, `input`, `list`, `modal`, `progress`, `radio-group`, `select`, `skeleton`, `tabs`, `toast`, `toggle`, `tooltip`
+- Blocks: `data-table`, `newsletter-cta`
+- Templates: `admin-dashboard`, `checkout-page`
 
 ## 동작과 안전장치
 

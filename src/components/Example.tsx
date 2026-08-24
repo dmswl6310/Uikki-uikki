@@ -2,13 +2,21 @@ import { useId, useState } from "react";
 import { Settings2 } from "lucide-react";
 import type { RegisteredComponentInfo } from "@/types/component.types";
 import PreviewShell from "./preview/PreviewShell";
+import type { PreviewDevice } from "./preview/PreviewShell";
 
 type ExampleProps = {
   componentInfo: RegisteredComponentInfo;
   exampleData: Record<string, unknown>;
+  previewDevice?: PreviewDevice;
+  previewIsDark?: boolean;
 };
 
-const Example = ({ componentInfo, exampleData }: ExampleProps) => {
+const Example = ({
+  componentInfo,
+  exampleData,
+  previewDevice = "wide",
+  previewIsDark = false,
+}: ExampleProps) => {
   const Component = componentInfo.Component;
   const [propsState, setPropsState] = useState(exampleData);
   const controls = componentInfo.propControls || {};
@@ -23,7 +31,7 @@ const Example = ({ componentInfo, exampleData }: ExampleProps) => {
 
   return (
     <div className="mb-10 flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-colors duration-300 hover:border-blue-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-blue-700">
-      <PreviewShell>
+      <PreviewShell device={previewDevice} isDark={previewIsDark}>
         <div className="animate-fade-up flex w-full justify-center">
           {Component ? <Component {...propsState} /> : null}
         </div>
@@ -33,7 +41,7 @@ const Example = ({ componentInfo, exampleData }: ExampleProps) => {
       <div className="bg-white p-6 dark:bg-slate-900">
         <div className="mb-4 flex items-center gap-2 text-sm font-semibold text-gray-700 dark:text-slate-200">
           <Settings2 size={16} className="text-gray-400" />
-          <span>단일 컴포넌트 속성 (Properties) 동적 테스트</span>
+          <span>Props 조절</span>
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
           {Object.keys(controls).map((key) => {

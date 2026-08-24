@@ -10,6 +10,7 @@ export const inputMeta = {
   updatedAt: new Date("2026-08-20"),
   image: thumbnail,
   propControls: {
+    label: { type: "string" as PropControl["type"] },
     placeholder: { type: "string" as PropControl["type"] },
     type: {
       type: "select" as PropControl["type"],

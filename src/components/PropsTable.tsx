@@ -10,14 +10,19 @@ const PropsTable = ({ controls }: PropsTableProps) => {
   if (keys.length === 0) return null;
 
   return (
-    <div className="overflow-x-auto w-full rounded-xl border border-gray-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm mt-8 transition-colors">
+    <div
+      className="mt-8 w-full overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm transition-colors focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none dark:border-slate-800 dark:bg-slate-900"
+      role="region"
+      aria-label="Props 표"
+      tabIndex={0}
+    >
       <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
         <thead className="bg-gray-50/80 dark:bg-slate-800/50 border-b border-gray-200 dark:border-slate-800 text-gray-900 dark:text-slate-100 font-semibold uppercase text-xs tracking-wider">
           <tr>
-            <th className="px-6 py-4 rounded-tl-xl">Prop Name</th>
-            <th className="px-6 py-4">Type</th>
-            <th className="px-6 py-4">Options / Range</th>
-            <th className="px-6 py-4 rounded-tr-xl">Description</th>
+            <th scope="col" className="rounded-tl-xl px-6 py-4">Prop Name</th>
+            <th scope="col" className="px-6 py-4">Type</th>
+            <th scope="col" className="px-6 py-4">Options / Range</th>
+            <th scope="col" className="rounded-tr-xl px-6 py-4">Description</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-100 dark:divide-slate-800/50">

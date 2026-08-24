@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { Search, X } from "lucide-react";
+import { ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import PageTitle from "@/components/common/PageTitle";
 import ComponentList from "@/components/ComponentList";
 import { componentsCatalog } from "@/data/componentsCatalog";
@@ -7,6 +7,7 @@ import { ComponentCategory } from "@/types/component.types";
 import { useSEO } from "@/hooks/useSEO";
 
 const categories: ComponentCategory[] = ["ui", "blocks", "templates"];
+const TAG_PREVIEW_LIMIT = 10;
 
 const categoryLabel: Record<ComponentCategory, string> = {
   ui: "UI",
@@ -19,6 +20,7 @@ const Components = () => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] =
     useState<ComponentCategory | null>(null);
+  const [showAllTags, setShowAllTags] = useState(false);
 
   useSEO({
     title: "컴포넌트 목록",
@@ -26,11 +28,31 @@ const Components = () => {
       "프로젝트에 사용된 모든 UI 컴포넌트를 탐색하고 사용법을 확인하세요.",
   });
 
-  // 모든 컴포넌트에서 고유한 태그 추출
+  // 대소문자가 다른 같은 태그를 합치고, 자주 쓰이는 순서로 노출합니다.
   const availableTags = useMemo(() => {
-    const tags = componentsCatalog.flatMap((c) => c.tags || []);
-    return Array.from(new Set(tags));
+    const counts = new Map<string, number>();
+    componentsCatalog.forEach((component) => {
+      component.tags?.forEach((tag) => {
+        const normalizedTag = tag.toLocaleLowerCase();
+        counts.set(normalizedTag, (counts.get(normalizedTag) ?? 0) + 1);
+      });
+    });
+
+    return Array.from(counts)
+      .sort(([tagA, countA], [tagB, countB]) =>
+        countB === countA ? tagA.localeCompare(tagB) : countB - countA,
+      )
+      .map(([tag]) => tag);
   }, []);
+
+  const visibleTags = useMemo(() => {
+    if (showAllTags) return availableTags;
+    const previewTags = availableTags.slice(0, TAG_PREVIEW_LIMIT);
+    if (selectedTag && !previewTags.includes(selectedTag)) {
+      return [...previewTags, selectedTag];
+    }
+    return previewTags;
+  }, [availableTags, selectedTag, showAllTags]);
 
   const categoryCounts = useMemo(
     () =>
@@ -59,7 +81,11 @@ const Components = () => {
         (comp.tags &&
           comp.tags.some((tag) => tag.toLowerCase().includes(query)));
 
-      const matchTag = selectedTag ? comp.tags?.includes(selectedTag) : true;
+      const matchTag = selectedTag
+        ? comp.tags?.some(
+            (tag) => tag.toLocaleLowerCase() === selectedTag,
+          )
+        : true;
       const matchCategory = selectedCategory
         ? (comp.category ?? "ui") === selectedCategory
         : true;
@@ -76,10 +102,16 @@ const Components = () => {
       />
 
       <div className="mb-8 flex flex-col gap-6">
-        <div className="flex flex-wrap gap-2 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+        <div
+          className="flex flex-wrap gap-2 rounded-2xl border border-gray-200 bg-white p-2 shadow-sm dark:border-slate-800 dark:bg-slate-900"
+          role="group"
+          aria-label="카테고리 필터"
+        >
           <button
+            type="button"
             onClick={() => setSelectedCategory(null)}
-            className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
+            aria-pressed={selectedCategory === null}
+            className={`min-h-11 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
               selectedCategory === null
                 ? "bg-gray-900 text-white shadow-sm"
                 : "bg-white text-gray-600 hover:bg-gray-50 dark:bg-slate-900 dark:text-gray-300 dark:hover:bg-slate-800"
@@ -93,9 +125,11 @@ const Components = () => {
 
             return (
               <button
+                type="button"
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
+                aria-pressed={isActive}
+                className={`min-h-11 rounded-xl px-4 py-2 text-sm font-semibold transition-all ${
                   isActive
                     ? "bg-blue-600 text-white shadow-sm"
                     : "bg-blue-50 text-blue-700 hover:bg-blue-100 dark:bg-blue-950/40 dark:text-blue-300 dark:hover:bg-blue-950/70"
@@ -131,10 +165,16 @@ const Components = () => {
           )}
         </div>
 
-        <div className="flex flex-wrap gap-2">
+        <div
+          className="flex flex-wrap gap-2"
+          role="group"
+          aria-label="태그 필터"
+        >
           <button
+            type="button"
             onClick={() => setSelectedTag(null)}
-            className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+            aria-pressed={selectedTag === null}
+            className={`min-h-11 rounded-full px-5 py-2 text-sm font-semibold transition-all ${
               selectedTag === null
                 ? "bg-gray-900 text-white shadow-sm"
                 : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-slate-800 dark:text-gray-300 dark:hover:bg-slate-700"
@@ -142,11 +182,13 @@ const Components = () => {
           >
             전체
           </button>
-          {availableTags.map((tag) => (
+          {visibleTags.map((tag) => (
             <button
+              type="button"
               key={tag}
               onClick={() => setSelectedTag(tag)}
-              className={`rounded-full px-5 py-2 text-sm font-semibold transition-all ${
+              aria-pressed={selectedTag === tag}
+              className={`min-h-11 rounded-full px-5 py-2 text-sm font-semibold transition-all ${
                 selectedTag === tag
                   ? "bg-blue-600 text-white shadow-sm"
                   : "bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-950/40 dark:text-blue-300 dark:hover:bg-blue-950/70"
@@ -155,8 +197,35 @@ const Components = () => {
               {tag}
             </button>
           ))}
+          {availableTags.length > TAG_PREVIEW_LIMIT && (
+            <button
+              type="button"
+              onClick={() => setShowAllTags((previous) => !previous)}
+              aria-expanded={showAllTags}
+              className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-600 transition-colors hover:bg-gray-50 hover:text-gray-900 dark:border-slate-700 dark:bg-slate-900 dark:text-gray-300 dark:hover:bg-slate-800"
+            >
+              {showAllTags ? (
+                <>
+                  <ChevronUp size={16} /> 태그 접기
+                </>
+              ) : (
+                <>
+                  <ChevronDown size={16} /> 태그 더보기 (
+                  {availableTags.length - TAG_PREVIEW_LIMIT})
+                </>
+              )}
+            </button>
+          )}
         </div>
       </div>
+
+      <p
+        className="mb-4 text-sm text-gray-500 dark:text-gray-400"
+        role="status"
+        aria-live="polite"
+      >
+        {filteredComponents.length}개 컴포넌트
+      </p>
 
       {filteredComponents.length > 0 ? (
         <ComponentList items={filteredComponents} />

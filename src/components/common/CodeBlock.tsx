@@ -54,12 +54,17 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
       window.matchMedia("(prefers-color-scheme: dark)").matches);
 
   return (
-    <div className="group relative w-full overflow-hidden text-sm">
+    <div
+      className="group relative h-full min-h-0 w-full overflow-auto text-sm focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+      role="region"
+      aria-label="소스 코드"
+      tabIndex={0}
+    >
       <div className="absolute top-3 right-3 z-10 flex gap-2">
         <button
           onClick={handleDownload}
           type="button"
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white/80 text-gray-500 opacity-0 shadow-sm backdrop-blur-sm transition-all group-focus-within:opacity-100 group-hover:opacity-100 hover:bg-white hover:text-gray-900 focus:opacity-100 focus:ring-2 focus:ring-blue-500/50 focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
+          className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white/90 text-gray-500 shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-gray-900 focus:ring-2 focus:ring-blue-500/50 focus:outline-none sm:h-9 sm:w-9 dark:border-slate-700 dark:bg-slate-800/90 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
           aria-label="소스 코드 다운로드"
           title="소스 코드 다운로드"
         >
@@ -68,7 +73,7 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
         <button
           onClick={handleCopy}
           type="button"
-          className="flex h-8 w-8 items-center justify-center rounded-md border border-gray-200 bg-white/80 text-gray-500 opacity-0 shadow-sm backdrop-blur-sm transition-all group-focus-within:opacity-100 group-hover:opacity-100 hover:bg-white hover:text-gray-900 focus:opacity-100 focus:ring-2 focus:ring-blue-500/50 focus:outline-none dark:border-slate-700 dark:bg-slate-800/80 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
+          className="flex h-10 w-10 items-center justify-center rounded-md border border-gray-200 bg-white/90 text-gray-500 shadow-sm backdrop-blur-sm transition-colors hover:bg-white hover:text-gray-900 focus:ring-2 focus:ring-blue-500/50 focus:outline-none sm:h-9 sm:w-9 dark:border-slate-700 dark:bg-slate-800/90 dark:text-gray-400 dark:hover:bg-slate-700 dark:hover:text-gray-100"
           aria-label={copied ? "복사 완료" : "소스 코드 복사"}
           title="코드 복사"
         >
@@ -82,14 +87,14 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
       <SyntaxHighlighter
         language={language}
         style={isDarkMode ? oneDark : oneLight}
-        wrapLines
-        wrapLongLines
         customStyle={{
           margin: 0,
           padding: "1.25rem",
           fontSize: "0.875rem",
           backgroundColor: isDarkMode ? "#0f172a" : "#ffffff",
           fontFamily: "'JetBrains Mono', 'Fira Code', Consolas, monospace",
+          minWidth: "max-content",
+          overflow: "visible",
         }}
       >
         {code}

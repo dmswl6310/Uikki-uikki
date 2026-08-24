@@ -5,6 +5,8 @@ type SEOProps = {
   description?: string;
 };
 
+const SITE_URL = "https://uikki.vercel.app";
+
 const updateMeta = (
   selector: string,
   attribute: "name" | "property",
@@ -18,6 +20,18 @@ const updateMeta = (
     document.head.appendChild(meta);
   }
   meta.content = content;
+};
+
+const updateCanonical = (href: string) => {
+  let canonical = document.querySelector<HTMLLinkElement>(
+    'link[rel="canonical"]',
+  );
+  if (!canonical) {
+    canonical = document.createElement("link");
+    canonical.rel = "canonical";
+    document.head.appendChild(canonical);
+  }
+  canonical.href = href;
 };
 
 export const useSEO = ({ title, description }: SEOProps) => {
@@ -45,6 +59,15 @@ export const useSEO = ({ title, description }: SEOProps) => {
       "property",
       "og:title",
       document.title,
+    );
+
+    const canonicalUrl = new URL(window.location.pathname, SITE_URL).href;
+    updateCanonical(canonicalUrl);
+    updateMeta(
+      'meta[property="og:url"]',
+      "property",
+      "og:url",
+      canonicalUrl,
     );
   }, [title, description]);
 };

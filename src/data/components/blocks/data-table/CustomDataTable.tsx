@@ -206,7 +206,12 @@ export const CustomDataTable = <T extends object>({
         </div>
       )}
 
-      <div className="overflow-x-auto">
+      <div
+        className="overflow-x-auto focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:outline-none"
+        role="region"
+        aria-label="데이터 표"
+        tabIndex={0}
+      >
         <table className="w-full min-w-[720px] border-collapse text-sm">
           <caption className="sr-only">
             {title || "데이터 목록"}. 총 {filteredRows.length}개 항목

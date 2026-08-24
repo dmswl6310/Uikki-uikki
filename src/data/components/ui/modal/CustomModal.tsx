@@ -4,6 +4,7 @@ export type CustomModalProps = {
   title: string;
   description: string;
   confirmText: string;
+  modal?: boolean;
   onClose?: () => void;
   onConfirm?: () => void;
 };
@@ -12,6 +13,7 @@ export const CustomModal = ({
   title,
   description,
   confirmText,
+  modal = true,
   onClose,
   onConfirm,
 }: CustomModalProps) => {
@@ -22,7 +24,7 @@ export const CustomModal = ({
     <div
       className="relative w-full max-w-md overflow-hidden rounded-2xl bg-white shadow-2xl ring-1 ring-black/5 dark:bg-slate-900 dark:ring-white/10"
       role="dialog"
-      aria-modal="true"
+      aria-modal={modal || undefined}
       aria-labelledby={titleId}
       aria-describedby={descriptionId}
     >
@@ -45,7 +47,7 @@ export const CustomModal = ({
         <button
           type="button"
           onClick={onClose}
-          className="ml-4 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-slate-800 dark:hover:text-gray-200"
+          className="ml-4 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-700 dark:hover:bg-slate-800 dark:hover:text-gray-200"
           aria-label="모달 닫기"
         >
           <svg

@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "description": "Copy Uikki React component source files into your project",
   "bin": {
-    "uikki": "./index.js"
+    "uikki": "index.js"
   },
   "scripts": {
     "test": "node --test index.test.cjs"

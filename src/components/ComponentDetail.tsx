@@ -224,15 +224,15 @@ const ComponentDetail = () => {
           )}
         </div>
 
-        <div className="lg:col-span-5">
-          <section className="sticky top-24 mt-8 h-[calc(100vh-8rem)] lg:mt-0">
-            <div className="mb-6 flex items-center gap-2">
+        <div className="min-w-0 lg:col-span-5">
+          <section className="mt-8 flex h-[min(42rem,calc(100vh-6rem))] min-h-[28rem] flex-col lg:sticky lg:top-24 lg:mt-0 lg:h-[calc(100vh-8rem)]">
+            <div className="mb-6 flex shrink-0 items-center gap-2">
               <div className="h-6 w-1.5 rounded-full bg-gray-900 dark:bg-slate-100"></div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
                 소스 코드
               </h2>
             </div>
-            <div className="flex h-[calc(100%-3rem)] flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-colors hover:border-gray-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-colors hover:border-gray-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
               <CodeTabs
                 code={detail.code}
                 codeJs={detail.codeJs}

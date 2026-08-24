@@ -3,12 +3,12 @@ import { ChevronLeft } from "lucide-react";
 import { loadComponent } from "@/data/componentLoaders";
 import type { RegisteredComponentInfo } from "@/types/component.types";
 import Examples from "./Examples";
-import CodeTabs from "./common/CodeTabs";
 import PropsTable from "./PropsTable";
 import { useSEO } from "@/hooks/useSEO";
 
-import { renderToStaticMarkup } from "react-dom/server";
-import { createElement, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+
+const SourceCodePanel = lazy(() => import("./SourceCodePanel"));
 
 const categoryLabel = {
   ui: "UI",
@@ -22,37 +22,6 @@ type ComponentLoadState = {
   detail?: RegisteredComponentInfo;
 };
 
-// 간단한 HTML 포매터 (태그 사이에 줄바꿈과 들여쓰기 추가)
-const formatHTML = (html: string) => {
-  let formatted = "";
-  let indent = "";
-
-  html.split(/>\s*</).forEach((element) => {
-    if (element.match(/^\/\w/)) {
-      indent = indent.substring(2);
-    }
-
-    formatted += indent + "<" + element + ">\n";
-
-    // input, img, br, hr 등의 닫는 태그가 없는 태그는 들여쓰기를 증가시키지 않음
-    if (
-      element.match(/^<?\w[^>]*[^/]$/) &&
-      !element.startsWith("input") &&
-      !element.startsWith("img") &&
-      !element.startsWith("br") &&
-      !element.startsWith("hr") &&
-      !element.startsWith("path") &&
-      !element.startsWith("circle") &&
-      !element.startsWith("line") &&
-      !element.startsWith("polyline")
-    ) {
-      indent += "  ";
-    }
-  });
-
-  return formatted.substring(1, formatted.length - 2).trim();
-};
-
 const ComponentDetail = () => {
   const { id } = useParams<{ id: string }>();
   const normalizedId = id === "button1" ? "button" : id;
@@ -60,6 +29,8 @@ const ComponentDetail = () => {
     status: "loading",
   });
   const detail = loadState.detail;
+  const sourceSectionRef = useRef<HTMLElement>(null);
+  const [shouldLoadSource, setShouldLoadSource] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -89,6 +60,28 @@ const ComponentDetail = () => {
       active = false;
     };
   }, [normalizedId]);
+
+  useEffect(() => {
+    if (!detail || shouldLoadSource || !sourceSectionRef.current) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoadSource(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setShouldLoadSource(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "400px" },
+    );
+
+    observer.observe(sourceSectionRef.current);
+    return () => observer.disconnect();
+  }, [detail, shouldLoadSource]);
 
   // SEO 메타 태그 동적 변경 (detail이 있을 때만 적용, 없으면 useSEO 훅 내부 로직과 타이밍 이슈 없도록)
   useSEO({
@@ -133,15 +126,6 @@ const ComponentDetail = () => {
   if (loadState.status === "not-found" || !detail) {
     return <Navigate to="/not-found" replace />;
   }
-
-  const htmlCode =
-    detail.Component && detail.examples.length > 0
-      ? formatHTML(
-          renderToStaticMarkup(
-            createElement(detail.Component, detail.examples[0]),
-          ),
-        )
-      : "";
 
   return (
     <div className="animate-fade-up mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
@@ -225,7 +209,10 @@ const ComponentDetail = () => {
         </div>
 
         <div className="min-w-0 lg:col-span-5">
-          <section className="mt-8 flex h-[min(42rem,calc(100vh-6rem))] min-h-[28rem] flex-col lg:sticky lg:top-24 lg:mt-0 lg:h-[calc(100vh-8rem)]">
+          <section
+            ref={sourceSectionRef}
+            className="mt-8 flex h-[min(42rem,calc(100vh-6rem))] min-h-[28rem] flex-col lg:sticky lg:top-24 lg:mt-0 lg:h-[calc(100vh-8rem)]"
+          >
             <div className="mb-6 flex shrink-0 items-center gap-2">
               <div className="h-6 w-1.5 rounded-full bg-gray-900 dark:bg-slate-100"></div>
               <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100">
@@ -233,11 +220,24 @@ const ComponentDetail = () => {
               </h2>
             </div>
             <div className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-colors hover:border-gray-300 dark:border-slate-800 dark:bg-slate-900 dark:hover:border-slate-700">
-              <CodeTabs
-                code={detail.code}
-                codeJs={detail.codeJs}
-                htmlCode={htmlCode}
-              />
+              {shouldLoadSource ? (
+                <Suspense
+                  fallback={
+                    <div
+                      role="status"
+                      className="flex h-full items-center justify-center text-sm text-gray-500 dark:text-gray-400"
+                    >
+                      소스 뷰어를 준비하는 중입니다…
+                    </div>
+                  }
+                >
+                  <SourceCodePanel detail={detail} />
+                </Suspense>
+              ) : (
+                <div className="flex h-full items-center justify-center px-6 text-center text-sm text-gray-500 dark:text-gray-400">
+                  소스 영역에 가까워지면 코드를 불러옵니다.
+                </div>
+              )}
             </div>
           </section>
         </div>

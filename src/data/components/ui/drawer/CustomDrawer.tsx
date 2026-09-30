@@ -10,6 +10,7 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import { createPortal } from "react-dom";
 
 type DrawerTriggerProps = {
   onClick?: MouseEventHandler<HTMLElement>;
@@ -36,6 +37,8 @@ export const CustomDrawer = ({
   trigger,
 }: CustomDrawerProps) => {
   const [internalIsOpen, setInternalIsOpen] = useState(false);
+  const [portalIsDark, setPortalIsDark] = useState(false);
+  const hostRef = useRef<HTMLSpanElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const panelId = useId();
@@ -57,6 +60,7 @@ export const CustomDrawer = ({
   useEffect(() => {
     if (!open) return;
 
+    setPortalIsDark(Boolean(hostRef.current?.closest(".dark")));
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     panelRef.current?.focus();
@@ -120,10 +124,10 @@ export const CustomDrawer = ({
 
   return (
     <>
-      {triggerElement}
+      <span ref={hostRef} className="contents">{triggerElement}</span>
 
-      {open && (
-        <>
+      {open && typeof document !== "undefined" && createPortal(
+        <div className={portalIsDark ? "dark" : undefined}>
           <button
             type="button"
             className="fixed inset-0 z-50 cursor-default bg-black/40 backdrop-blur-sm"
@@ -139,7 +143,7 @@ export const CustomDrawer = ({
             tabIndex={-1}
             className={`fixed z-[60] flex flex-col bg-white shadow-2xl outline-none dark:bg-slate-900 ${positionClasses[position]}`}
           >
-            <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4 dark:border-slate-800">
+            <div className="flex shrink-0 items-center justify-between gap-3 border-b border-gray-100 px-6 py-4 dark:border-slate-800">
               <h2
                 id={titleId}
                 className="text-lg font-semibold text-gray-900 dark:text-slate-100"
@@ -149,7 +153,7 @@ export const CustomDrawer = ({
               <button
                 type="button"
                 onClick={handleClose}
-                className="flex h-11 w-11 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-slate-800 dark:hover:text-gray-300"
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600 dark:hover:bg-slate-800 dark:hover:text-gray-300"
                 aria-label="드로어 닫기"
               >
                 <svg
@@ -168,11 +172,12 @@ export const CustomDrawer = ({
                 </svg>
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-6 text-gray-600 dark:text-gray-400">
+            <div className="min-h-0 flex-1 overflow-y-auto p-6 text-gray-600 dark:text-gray-400">
               {children || <p>Drawer Content goes here...</p>}
             </div>
           </div>
-        </>
+        </div>,
+        document.body,
       )}
     </>
   );

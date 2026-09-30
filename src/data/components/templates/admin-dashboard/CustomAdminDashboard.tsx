@@ -97,9 +97,9 @@ export const CustomAdminDashboard = ({
   }, [period]);
 
   return (
-    <section className="w-full overflow-hidden rounded-[32px] border border-slate-200 bg-slate-100 shadow-[0_30px_100px_-40px_rgba(15,23,42,0.38)] dark:border-slate-700 dark:bg-slate-950">
-      <div className="grid min-h-[760px] lg:grid-cols-[220px_1fr]">
-        <aside className="border-b border-slate-200 bg-slate-950 p-5 text-white lg:border-r lg:border-b-0 dark:border-slate-800">
+    <section className="@container/dashboard w-full min-w-0 overflow-hidden rounded-[32px] border border-slate-200 bg-slate-100 shadow-[0_30px_100px_-40px_rgba(15,23,42,0.38)] dark:border-slate-700 dark:bg-slate-950">
+      <div className="grid min-h-[760px] @min-[64rem]/dashboard:grid-cols-[220px_minmax(0,1fr)]">
+        <aside className="min-w-0 border-b border-slate-200 bg-slate-950 p-5 text-white @min-[64rem]/dashboard:border-r @min-[64rem]/dashboard:border-b-0 dark:border-slate-800">
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-lg font-black">
               {workspaceName.slice(0, 1)}
@@ -112,7 +112,7 @@ export const CustomAdminDashboard = ({
 
           <nav
             aria-label="대시보드 메뉴"
-            className="mt-6 flex gap-2 overflow-x-auto lg:flex-col"
+            className="mt-6 flex gap-2 overflow-x-auto @min-[64rem]/dashboard:flex-col"
           >
             {navItems.map((item, index) => (
               <button
@@ -135,7 +135,7 @@ export const CustomAdminDashboard = ({
             ))}
           </nav>
 
-          <div className="mt-8 hidden rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 lg:block">
+          <div className="mt-8 hidden rounded-2xl bg-white/5 p-4 ring-1 ring-white/10 @min-[64rem]/dashboard:block">
             <p className="text-xs font-semibold text-slate-400">이번 달 목표</p>
             <div className="mt-3">
               <CustomProgress label="매출 달성률" value={78} color="indigo" />
@@ -143,20 +143,20 @@ export const CustomAdminDashboard = ({
           </div>
         </aside>
 
-        <main className="min-w-0 p-4 sm:p-6 lg:p-8">
-          <header className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <main className="@container/dashboard-main min-w-0 p-4 @min-[40rem]/dashboard:p-6 @min-[64rem]/dashboard:p-8">
+          <header className="flex flex-col gap-4 @min-[40rem]/dashboard-main:flex-row @min-[40rem]/dashboard-main:items-center @min-[40rem]/dashboard-main:justify-between">
             <div>
               <p className="text-sm font-semibold text-blue-600 dark:text-blue-400">
                 {activeNav}
               </p>
-              <h1 className="mt-1 text-2xl font-black tracking-tight text-slate-950 sm:text-3xl dark:text-white">
+              <h1 className="mt-1 text-2xl font-black tracking-tight text-slate-950 @min-[40rem]/dashboard-main:text-3xl dark:text-white">
                 안녕하세요, {ownerName}님
               </h1>
               <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
                 워크스페이스의 핵심 지표와 최근 활동을 확인하세요.
               </p>
             </div>
-            <div className="flex items-end gap-2">
+            <div className="flex flex-wrap items-end gap-2">
               <div className="w-32">
                 <CustomSelect
                   label="조회 기간"
@@ -189,7 +189,7 @@ export const CustomAdminDashboard = ({
             </div>
           </header>
 
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-7 grid gap-4 @min-[32rem]/dashboard-main:grid-cols-2 @min-[56rem]/dashboard-main:grid-cols-4">
             {[
               ["총 매출", "₩24.8M", "+12.5%", "blue"],
               ["신규 고객", "1,248", "+8.2%", "green"],
@@ -232,7 +232,7 @@ export const CustomAdminDashboard = ({
             ))}
           </div>
 
-          <div className="mt-4 grid gap-4 xl:grid-cols-[1.45fr_0.75fr]">
+          <div className="mt-4 grid gap-4 @min-[56rem]/dashboard-main:grid-cols-[minmax(0,1.45fr)_minmax(0,0.75fr)]">
             {showGrowthChart && (
               <article className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900">
                 <div className="flex items-start justify-between">

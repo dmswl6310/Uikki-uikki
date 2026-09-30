@@ -32,17 +32,17 @@ const PreviewShell = ({
       aria-label={`컴포넌트 미리보기 · ${device === "mobile" ? "모바일 390px" : "가용 너비"}`}
     >
       <div
-        className={`flex min-h-[320px] items-center justify-center overflow-auto p-4 sm:p-6 ${
+        className={`flex min-h-[320px] items-center justify-center overflow-auto p-2 sm:p-4 ${
           isDark
             ? "bg-[radial-gradient(circle_at_top,_rgba(59,130,246,0.18),_transparent_40%),linear-gradient(180deg,#020617_0%,#0f172a_100%)]"
             : "bg-[#fafafa] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]"
         }`}
       >
         <div
-          className={`${isDark ? "dark" : ""} ${viewportClasses} transition-all duration-300 ease-out motion-reduce:transition-none`}
+          className={`${isDark ? "dark" : ""} ${viewportClasses} min-w-0 transition-all duration-300 ease-out motion-reduce:transition-none`}
         >
           <div
-            className={`rounded-[28px] p-6 transition-all duration-300 sm:p-8 ${frameClasses}`}
+            className={`min-w-0 rounded-[28px] p-2 transition-all duration-300 sm:p-4 ${frameClasses}`}
           >
             {children}
           </div>

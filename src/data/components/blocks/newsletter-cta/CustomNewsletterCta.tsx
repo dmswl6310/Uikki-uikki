@@ -18,20 +18,20 @@ export const CustomNewsletterCta = ({
   placeholder,
 }: CustomNewsletterCtaProps) => {
   return (
-    <section className="w-full overflow-hidden rounded-[32px] border border-slate-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_42%,#eef2ff_100%)] p-6 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.35)] sm:p-8 dark:border-slate-700 dark:bg-[linear-gradient(135deg,#0f172a_0%,#111827_42%,#172554_100%)]">
-      <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-        <div className="max-w-2xl">
+    <section className="@container/newsletter w-full min-w-0 overflow-hidden rounded-[32px] border border-slate-200 bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_42%,#eef2ff_100%)] p-4 shadow-[0_24px_80px_-32px_rgba(15,23,42,0.35)] dark:border-slate-700 dark:bg-[linear-gradient(135deg,#0f172a_0%,#111827_42%,#172554_100%)]">
+      <div className="flex flex-col gap-8 @min-[56rem]/newsletter:flex-row @min-[56rem]/newsletter:items-end @min-[56rem]/newsletter:justify-between">
+        <div className="min-w-0 max-w-2xl flex-1">
           <CustomBadge text={eyebrow} color="blue" variant="outline" />
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
+          <h2 className="mt-4 break-keep text-2xl font-black tracking-tight text-slate-900 @min-[36rem]/newsletter:text-4xl dark:text-slate-100">
             {title}
           </h2>
-          <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 sm:text-lg dark:text-slate-300">
+          <p className="mt-4 max-w-xl text-base leading-7 text-slate-600 @min-[36rem]/newsletter:text-lg dark:text-slate-300">
             {description}
           </p>
         </div>
 
-        <div className="w-full max-w-xl rounded-[28px] border border-white/80 bg-white/80 p-4 shadow-lg backdrop-blur dark:border-white/10 dark:bg-slate-900/80">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="w-full min-w-0 max-w-xl flex-1 rounded-[28px] border border-white/80 bg-white/80 p-4 shadow-lg backdrop-blur dark:border-white/10 dark:bg-slate-900/80">
+          <div className="flex flex-col gap-3 @min-[36rem]/newsletter:flex-row @min-[36rem]/newsletter:items-center">
             <CustomInput
               placeholder={placeholder}
               type="email"

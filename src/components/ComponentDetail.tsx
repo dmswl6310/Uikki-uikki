@@ -163,7 +163,7 @@ const ComponentDetail = () => {
       <div className="mt-8 border-b border-gray-200 dark:border-slate-800"></div>
 
       <div className="mt-12 mb-20 grid grid-cols-1 gap-10 lg:grid-cols-12">
-        <div className="space-y-16 lg:col-span-7">
+        <div className="min-w-0 space-y-16 lg:col-span-7">
           <section>
             <div className="mb-6 flex items-center gap-2">
               <div className="h-6 w-1.5 rounded-full bg-blue-600"></div>

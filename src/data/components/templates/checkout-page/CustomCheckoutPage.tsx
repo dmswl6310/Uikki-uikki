@@ -17,20 +17,20 @@ export const CustomCheckoutPage = ({
   primaryActionLabel,
 }: CustomCheckoutPageProps) => {
   return (
-    <section className="mx-auto grid w-full max-w-6xl gap-6 lg:grid-cols-[1.3fr_0.9fr]">
+    <section className="@container/checkout mx-auto w-full min-w-0 max-w-6xl">
       <div className="overflow-hidden rounded-[32px] border border-slate-200 bg-white shadow-[0_24px_80px_-32px_rgba(15,23,42,0.3)] dark:border-slate-700 dark:bg-slate-900">
-        <div className="border-b border-slate-100 px-6 py-5 sm:px-8 dark:border-slate-800">
+        <div className="border-b border-slate-100 px-4 py-5 @min-[40rem]/checkout:px-8 dark:border-slate-800">
           <CustomBadge text="Template" color="green" variant="outline" />
-          <h1 className="mt-4 text-3xl font-black tracking-tight text-slate-900 sm:text-4xl dark:text-slate-100">
+          <h1 className="mt-4 break-keep text-2xl font-black tracking-tight text-slate-900 @min-[40rem]/checkout:text-4xl dark:text-slate-100">
             {heading}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base dark:text-slate-300">
+          <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 @min-[40rem]/checkout:text-base dark:text-slate-300">
             {subheading}
           </p>
         </div>
 
-        <div className="grid gap-6 px-6 py-6 sm:px-8 lg:grid-cols-[1fr_0.9fr]">
-          <div className="space-y-5">
+        <div className="grid gap-6 px-4 py-6 @min-[40rem]/checkout:px-8 @min-[48rem]/checkout:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]">
+          <div className="min-w-0 space-y-5">
             <div className="rounded-3xl border border-slate-100 bg-slate-50 p-5 dark:border-slate-800 dark:bg-slate-800/60">
               <p className="text-sm font-semibold text-slate-500 dark:text-slate-400">
                 연락처 정보
@@ -75,12 +75,12 @@ export const CustomCheckoutPage = ({
           </div>
 
           <aside className="rounded-[28px] border border-slate-200 bg-[linear-gradient(180deg,#0f172a_0%,#111827_100%)] p-5 text-white shadow-xl">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
                 <p className="text-sm font-semibold text-slate-300">
                   결제 요약
                 </p>
-                <p className="mt-1 text-3xl font-black">
+                <p className="mt-1 break-all text-2xl font-black @min-[40rem]/checkout:text-3xl">
                   ₩{totalPrice.toLocaleString()}
                 </p>
               </div>
@@ -94,7 +94,7 @@ export const CustomCheckoutPage = ({
               ].map(([name, price]) => (
                 <div
                   key={name}
-                  className="flex items-center justify-between text-sm"
+                  className="flex flex-wrap items-center justify-between gap-2 text-sm"
                 >
                   <span className="text-slate-200">{name}</span>
                   <span className="font-semibold text-white">{price}</span>

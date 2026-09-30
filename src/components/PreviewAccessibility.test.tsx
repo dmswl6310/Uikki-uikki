@@ -10,6 +10,27 @@ import { CustomModal } from "@/data/components/ui/modal/CustomModal";
 afterEach(cleanup);
 
 describe("Preview component accessibility", () => {
+  it("opens drawers outside clipped previews and restores focus on close", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <div className="dark" style={{ overflow: "hidden", transform: "translateY(0)" }}>
+        <CustomDrawer trigger={<button>열기</button>} title="설정" />
+      </div>,
+    );
+    const trigger = screen.getByRole("button", { name: "열기" });
+    await user.click(trigger);
+    const dialog = screen.getByRole("dialog", { name: "설정" });
+    expect(container).not.toContainElement(dialog);
+    expect(document.body).toContainElement(dialog);
+    expect(dialog.closest(".dark")).not.toBeNull();
+    expect(dialog).toHaveFocus();
+    expect(document.body.style.overflow).toBe("hidden");
+    await user.keyboard("{Escape}");
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(trigger).toHaveFocus();
+    expect(document.body.style.overflow).not.toBe("hidden");
+  });
+
   it("keeps a visible label for text inputs after typing", () => {
     render(
       <CustomInput

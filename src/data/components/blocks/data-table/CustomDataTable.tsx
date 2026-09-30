@@ -153,9 +153,9 @@ export const CustomDataTable = <T extends object>({
   };
 
   return (
-    <section className="w-full overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
+    <section className="@container/data-table w-full min-w-0 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900">
       {(title || description || searchable) && (
-        <div className="flex flex-col gap-4 border-b border-slate-200 p-5 sm:flex-row sm:items-end sm:justify-between dark:border-slate-800">
+        <div className="flex flex-col gap-4 border-b border-slate-200 p-5 @min-[40rem]/data-table:flex-row @min-[40rem]/data-table:items-end @min-[40rem]/data-table:justify-between dark:border-slate-800">
           <div>
             {title && (
               <h2 className="text-xl font-bold text-slate-950 dark:text-white">
@@ -169,7 +169,7 @@ export const CustomDataTable = <T extends object>({
             )}
           </div>
           {searchable && (
-            <label className="relative block w-full sm:max-w-xs">
+            <label className="relative block w-full @min-[40rem]/data-table:max-w-xs">
               <span className="sr-only">테이블 검색</span>
               <svg
                 viewBox="0 0 20 20"
@@ -361,14 +361,14 @@ export const CustomDataTable = <T extends object>({
         </table>
       </div>
 
-      <footer className="flex flex-col gap-3 border-t border-slate-200 px-5 py-4 text-sm sm:flex-row sm:items-center sm:justify-between dark:border-slate-800">
+      <footer className="flex flex-col gap-3 border-t border-slate-200 px-5 py-4 text-sm @min-[40rem]/data-table:flex-row @min-[40rem]/data-table:items-center @min-[40rem]/data-table:justify-between dark:border-slate-800">
         <p className="text-slate-500 dark:text-slate-400">
           {selectable && selectedRows.size > 0
             ? `${selectedRows.size}개 선택 · `
             : ""}
           총 {filteredRows.length}개
         </p>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <span className="text-slate-500 dark:text-slate-400">
             {currentPage} / {totalPages} 페이지
           </span>

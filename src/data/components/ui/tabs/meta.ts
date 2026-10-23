@@ -1,5 +1,6 @@
 import thumbnail from "@assets/tabs-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomTabsProps } from "./CustomTabs";
 
 export const tabsMeta = {
   category: "ui" as const,
@@ -15,5 +16,5 @@ export const tabsMeta = {
       options: ["line", "pill"],
       label: "디자인 스타일",
     },
-  } as Record<string, PropControl>,
+  } satisfies PropControlsOf<CustomTabsProps>,
 };

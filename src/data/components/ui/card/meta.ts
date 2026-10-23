@@ -1,5 +1,6 @@
 import thumbnail from "@assets/card-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomCardProps } from "./CustomCard";
 
 export const cardMeta = {
   category: "ui" as const,
@@ -14,5 +15,5 @@ export const cardMeta = {
     title: { type: "string" as PropControl["type"] },
     description: { type: "string" as PropControl["type"] },
     footerText: { type: "string" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomCardProps>,
 };

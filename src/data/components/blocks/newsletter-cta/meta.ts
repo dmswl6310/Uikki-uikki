@@ -1,5 +1,6 @@
 import thumbnail from "@assets/newsletter-cta-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomNewsletterCtaProps } from "./CustomNewsletterCta";
 
 export const newsletterCtaMeta = {
   category: "blocks" as const,
@@ -16,5 +17,5 @@ export const newsletterCtaMeta = {
     description: { type: "string" as PropControl["type"] },
     ctaLabel: { type: "string" as PropControl["type"] },
     placeholder: { type: "string" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomNewsletterCtaProps>,
 };

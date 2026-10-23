@@ -1,5 +1,6 @@
 import thumbnail from "@assets/accordion-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomAccordionProps } from "./CustomAccordion";
 
 export const accordionMeta = {
   category: "ui" as const,
@@ -15,5 +16,5 @@ export const accordionMeta = {
       type: "boolean",
       label: "여러 항목 동시 펼침 허용",
     },
-  } as Record<string, PropControl>,
+  } satisfies PropControlsOf<CustomAccordionProps>,
 };

@@ -1,5 +1,6 @@
 import thumbnail from "@assets/input-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomInputProps } from "./CustomInput";
 
 export const inputMeta = {
   category: "ui" as const,
@@ -17,5 +18,5 @@ export const inputMeta = {
       options: ["text", "password", "email"],
     },
     disabled: { type: "boolean" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomInputProps>,
 };

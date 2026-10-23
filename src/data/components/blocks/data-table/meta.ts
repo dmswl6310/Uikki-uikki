@@ -1,6 +1,6 @@
 import thumbnail from "@assets/data-table-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomDataTableProps } from "./CustomDataTable";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomDataTableProps } from "./CustomDataTable";
 
 export const dataTableMeta = {
   category: "blocks" as const,
@@ -18,5 +18,5 @@ export const dataTableMeta = {
     searchPlaceholder: { type: "string", label: "검색 안내문" },
     selectable: { type: "boolean", label: "행 선택 사용" },
     pageSize: { type: "number", label: "페이지 크기", min: 2, max: 8, step: 1 },
-  } as Partial<Record<keyof CustomDataTableProps, PropControl>>,
+  } satisfies PropControlsOf<CustomDataTableProps>,
 };

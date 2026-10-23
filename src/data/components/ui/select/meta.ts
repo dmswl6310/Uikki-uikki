@@ -1,6 +1,6 @@
 import thumbnail from "@assets/select-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomSelectProps } from "./CustomSelect";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomSelectProps } from "./CustomSelect";
 
 export const selectMeta = {
   category: "ui" as const,
@@ -21,5 +21,5 @@ export const selectMeta = {
     helperText: { type: "string", label: "도움말" },
     error: { type: "string", label: "오류 메시지" },
     disabled: { type: "boolean", label: "비활성화" },
-  } as Partial<Record<keyof CustomSelectProps, PropControl>>,
+  } satisfies PropControlsOf<CustomSelectProps>,
 };

@@ -1,5 +1,6 @@
 import thumbnail from "@assets/badge-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomBadgeProps } from "./CustomBadge";
 
 export const badgeMeta = {
   category: "ui" as const,
@@ -19,5 +20,5 @@ export const badgeMeta = {
       type: "select" as PropControl["type"],
       options: ["solid", "outline"],
     },
-  },
+  } satisfies PropControlsOf<CustomBadgeProps>,
 };

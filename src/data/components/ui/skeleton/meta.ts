@@ -1,6 +1,6 @@
 import thumbnail from "@assets/skeleton-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomSkeletonProps } from "./CustomSkeleton";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomSkeletonProps } from "./CustomSkeleton";
 
 export const skeletonMeta = {
   category: "ui" as const,
@@ -19,5 +19,5 @@ export const skeletonMeta = {
     },
     count: { type: "number", label: "표시 개수", min: 1, max: 5, step: 1 },
     animated: { type: "boolean", label: "애니메이션" },
-  } as Partial<Record<keyof CustomSkeletonProps, PropControl>>,
+  } satisfies PropControlsOf<CustomSkeletonProps>,
 };

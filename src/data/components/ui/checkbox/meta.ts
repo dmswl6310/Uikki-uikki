@@ -1,6 +1,6 @@
 import thumbnail from "@assets/checkbox-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomCheckboxProps } from "./CustomCheckbox";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomCheckboxProps } from "./CustomCheckbox";
 
 export const checkboxMeta = {
   category: "ui" as const,
@@ -16,5 +16,5 @@ export const checkboxMeta = {
     checked: { type: "boolean", label: "선택 상태" },
     indeterminate: { type: "boolean", label: "일부 선택 상태" },
     disabled: { type: "boolean", label: "비활성화" },
-  } as Partial<Record<keyof CustomCheckboxProps, PropControl>>,
+  } satisfies PropControlsOf<CustomCheckboxProps>,
 };

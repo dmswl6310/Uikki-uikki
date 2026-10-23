@@ -1,5 +1,6 @@
 import thumbnail from "@assets/drawer-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomDrawerProps } from "./CustomDrawer";
 
 export const drawerMeta = {
   category: "ui" as const,
@@ -19,5 +20,5 @@ export const drawerMeta = {
       type: "string",
       label: "패널 제목",
     },
-  } as Record<string, PropControl>,
+  } satisfies PropControlsOf<CustomDrawerProps>,
 };

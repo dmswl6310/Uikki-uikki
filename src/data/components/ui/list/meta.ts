@@ -1,5 +1,6 @@
 import listThumbnail from "@assets/list-thumbnail-new.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomListProps } from "./CustomList";
 
 export const listMeta = {
   category: "ui" as const,
@@ -14,5 +15,5 @@ export const listMeta = {
     second: { type: "string" as PropControl["type"] },
     third: { type: "string" as PropControl["type"] },
     fourth: { type: "string" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomListProps>,
 };

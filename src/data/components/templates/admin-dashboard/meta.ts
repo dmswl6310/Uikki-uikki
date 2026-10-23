@@ -1,6 +1,6 @@
 import thumbnail from "@assets/admin-dashboard-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomAdminDashboardProps } from "./CustomAdminDashboard";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomAdminDashboardProps } from "./CustomAdminDashboard";
 
 export const adminDashboardMeta = {
   category: "templates" as const,
@@ -20,5 +20,5 @@ export const adminDashboardMeta = {
       options: ["7일", "30일", "90일"],
     },
     showGrowthChart: { type: "boolean", label: "매출 차트 표시" },
-  } as Partial<Record<keyof CustomAdminDashboardProps, PropControl>>,
+  } satisfies PropControlsOf<CustomAdminDashboardProps>,
 };

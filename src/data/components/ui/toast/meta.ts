@@ -1,5 +1,6 @@
 import thumbnail from "@assets/toast-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomToastProps } from "./CustomToast";
 
 export const toastMeta = {
   category: "ui" as const,
@@ -16,5 +17,5 @@ export const toastMeta = {
       type: "select" as PropControl["type"],
       options: ["success", "error", "info", "warning"],
     },
-  },
+  } satisfies PropControlsOf<CustomToastProps>,
 };

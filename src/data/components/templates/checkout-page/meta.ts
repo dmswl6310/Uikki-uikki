@@ -1,5 +1,6 @@
 import thumbnail from "@assets/checkout-page-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomCheckoutPageProps } from "./CustomCheckoutPage";
 
 export const checkoutPageMeta = {
   category: "templates" as const,
@@ -20,5 +21,5 @@ export const checkoutPageMeta = {
       step: 1000,
     },
     primaryActionLabel: { type: "string" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomCheckoutPageProps>,
 };

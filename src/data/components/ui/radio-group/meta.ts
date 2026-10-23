@@ -1,6 +1,6 @@
 import thumbnail from "@assets/radio-group-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomRadioGroupProps } from "./CustomRadioGroup";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomRadioGroupProps } from "./CustomRadioGroup";
 
 export const radioGroupMeta = {
   category: "ui" as const,
@@ -23,5 +23,5 @@ export const radioGroupMeta = {
       options: ["vertical", "horizontal"],
     },
     disabled: { type: "boolean", label: "전체 비활성화" },
-  } as Partial<Record<keyof CustomRadioGroupProps, PropControl>>,
+  } satisfies PropControlsOf<CustomRadioGroupProps>,
 };

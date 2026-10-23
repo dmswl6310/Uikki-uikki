@@ -1,5 +1,6 @@
 import thumbnail from "@assets/toggle-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomToggleProps } from "./CustomToggle";
 
 export const toggleMeta = {
   category: "ui" as const,
@@ -12,5 +13,5 @@ export const toggleMeta = {
   propControls: {
     label: { type: "string" as PropControl["type"] },
     checked: { type: "boolean" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomToggleProps>,
 };

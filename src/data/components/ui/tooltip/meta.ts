@@ -1,5 +1,6 @@
 import thumbnail from "@assets/tooltip-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomTooltipProps } from "./CustomTooltip";
 
 export const tooltipMeta = {
   category: "ui" as const,
@@ -20,5 +21,5 @@ export const tooltipMeta = {
       options: ["top", "bottom", "left", "right"],
       label: "표시 위치",
     },
-  } as Record<string, PropControl>,
+  } satisfies PropControlsOf<CustomTooltipProps>,
 };

@@ -1,5 +1,6 @@
 import thumbnail from "@assets/modal-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomModalProps } from "./CustomModal";
 
 export const modalMeta = {
   category: "ui" as const,
@@ -14,5 +15,5 @@ export const modalMeta = {
     title: { type: "string" as PropControl["type"] },
     description: { type: "string" as PropControl["type"] },
     confirmText: { type: "string" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomModalProps>,
 };

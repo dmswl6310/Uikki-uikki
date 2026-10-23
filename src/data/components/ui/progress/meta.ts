@@ -1,5 +1,6 @@
 import thumbnail from "@assets/progress-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomProgressProps } from "./CustomProgress";
 
 export const progressMeta = {
   category: "ui" as const,
@@ -17,5 +18,5 @@ export const progressMeta = {
       type: "select" as PropControl["type"],
       options: ["blue", "green", "indigo", "amber"],
     },
-  },
+  } satisfies PropControlsOf<CustomProgressProps>,
 };

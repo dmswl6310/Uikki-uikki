@@ -104,8 +104,8 @@ export const Custom${pascalName} = ({ text = "Hello ${titleName}" }: Custom${pas
 `;
 
 // 2. meta.ts
-const metaContent = `import { PropControl } from "@/types/component.types";
-import { Custom${pascalName}Props } from "./Custom${pascalName}";
+const metaContent = `import type { PropControlsOf } from "@/types/component.types";
+import type { Custom${pascalName}Props } from "./Custom${pascalName}";
 
 export const ${camelName}Meta = {
   category: "${category}" as const,
@@ -115,8 +115,8 @@ export const ${camelName}Meta = {
   aliases: [],
   updatedAt: new Date("${new Date().toISOString().slice(0, 10)}"),
   propControls: {
-    text: { type: "string" as PropControl["type"] },
-  } as Partial<Record<keyof Custom${pascalName}Props, PropControl>>,
+    text: { type: "string" },
+  } satisfies PropControlsOf<Custom${pascalName}Props>,
 };
 `;
 

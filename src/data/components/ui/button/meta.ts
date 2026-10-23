@@ -1,5 +1,6 @@
 import thumbnail from "@assets/button-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomButtonProps } from "./CustomButton";
 
 export const buttonMeta = {
   category: "ui" as const,
@@ -11,5 +12,5 @@ export const buttonMeta = {
   image: thumbnail,
   propControls: {
     label: { type: "string" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomButtonProps>,
 };

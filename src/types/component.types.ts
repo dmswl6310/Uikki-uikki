@@ -21,6 +21,10 @@ export interface PropControl extends ControlBase {
   step?: number;
 }
 
+// meta.ts에서는 `satisfies PropControlsOf<Props>`로 써야 없는 props 이름이 타입 오류가 됩니다.
+// `as`로 단언하거나 다른 파일에서 스프레드로 넘기면 남는 속성을 검사하지 않습니다.
+export type PropControlsOf<T> = Partial<Record<keyof T & string, PropControl>>;
+
 export interface ComponentInfo<T extends object = Record<string, unknown>> {
   id: string; // 라우팅이나 key로 쓸 고유id
   name: string; // UI에 보여질 실제 컴포넌트 이름
@@ -37,7 +41,7 @@ export interface ComponentInfo<T extends object = Record<string, unknown>> {
   codeJs: string; // 사용 예시 코드 (JavaScript)
 
   examples: T[];
-  propControls?: Partial<Record<keyof T & string, PropControl>>; // 동적 Playground 컨트롤 속성
+  propControls?: PropControlsOf<T>; // 동적 Playground 컨트롤 속성
   Component?: ComponentType<T>; // 동적 로딩된 실제 컴포넌트
 }
 

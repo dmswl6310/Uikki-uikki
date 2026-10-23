@@ -1,5 +1,6 @@
 import thumbnail from "@assets/avatar-thumbnail.webp";
-import { PropControl } from "@/types/component.types";
+import type { PropControl, PropControlsOf } from "@/types/component.types";
+import type { CustomAvatarProps } from "./CustomAvatar";
 
 export const avatarMeta = {
   category: "ui" as const,
@@ -16,5 +17,5 @@ export const avatarMeta = {
       options: ["sm", "md", "lg"],
     },
     online: { type: "boolean" as PropControl["type"] },
-  },
+  } satisfies PropControlsOf<CustomAvatarProps>,
 };

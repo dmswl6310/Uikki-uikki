@@ -1,6 +1,6 @@
 import thumbnail from "@assets/dropdown-menu-thumbnail.svg";
-import { PropControl } from "@/types/component.types";
-import { CustomDropdownMenuProps } from "./CustomDropdownMenu";
+import type { PropControlsOf } from "@/types/component.types";
+import type { CustomDropdownMenuProps } from "./CustomDropdownMenu";
 
 export const dropdownMenuMeta = {
   category: "ui" as const,
@@ -18,5 +18,5 @@ export const dropdownMenuMeta = {
       label: "메뉴 정렬",
       options: ["left", "right"],
     },
-  } as Partial<Record<keyof CustomDropdownMenuProps, PropControl>>,
+  } satisfies PropControlsOf<CustomDropdownMenuProps>,
 };
